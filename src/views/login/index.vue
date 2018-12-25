@@ -1,108 +1,151 @@
+<!-- 登录 -->
 <template>
-  <div class="login-container">
+<div class="login-container">
+
     <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" auto-complete="on" label-position="left">
-      <h3 class="title">vue-admin-template</h3>
-      <el-form-item prop="username">
-        <span class="svg-container">
-          <svg-icon icon-class="user" />
-        </span>
-        <el-input v-model="loginForm.username" name="username" type="text" auto-complete="on" placeholder="username" />
-      </el-form-item>
-      <el-form-item prop="password">
-        <span class="svg-container">
-          <svg-icon icon-class="password" />
-        </span>
-        <el-input
-          :type="pwdType"
-          v-model="loginForm.password"
-          name="password"
-          auto-complete="on"
-          placeholder="password"
-          @keyup.enter.native="handleLogin" />
-        <span class="show-pwd" @click="showPwd">
-          <svg-icon icon-class="eye" />
-        </span>
-      </el-form-item>
-      <el-form-item>
-        <el-button :loading="loading" type="primary" style="width:100%;" @click.native.prevent="handleLogin">
-          Sign in
-        </el-button>
-      </el-form-item>
-      <div class="tips">
-        <span style="margin-right:20px;">username: admin</span>
-        <span> password: admin</span>
-      </div>
+
+        <h3 class="title">新能源洗车维修管理平台</h3>
+
+        <!-- 账号 -->
+        <el-form-item prop="username">
+            <span class="svg-container">
+                <svg-icon icon-class="user" />
+            </span>
+            <el-input 
+                v-model="loginForm.username" 
+                name="username" 
+                type="text" 
+                auto-complete="on" 
+                placeholder="username" 
+            ></el-input>
+        </el-form-item>
+
+        <!-- 密码 -->
+        <el-form-item prop="password">
+            <span class="svg-container">
+                <svg-icon icon-class="password" />
+            </span>
+            <el-input
+                :type="pwdType"
+                v-model="loginForm.password"
+                name="password"
+                auto-complete="on"
+                placeholder="password"
+                @keyup.enter.native="handleLogin" 
+            ></el-input>
+            <span class="show-pwd" @click="showPwd">
+                <svg-icon icon-class="eye" />
+            </span>
+        </el-form-item>
+        
+
+        <!-- 登录按钮 -->
+        <el-form-item>
+            <el-button :loading="loading" type="primary" style="width:100%;" @click.native.prevent="handleLogin">
+                登录
+            </el-button>
+        </el-form-item>
     </el-form>
-  </div>
+</div>
 </template>
 
 <script>
-import { isvalidUsername } from '@/utils/validate'
 
 export default {
-  name: 'Login',
-  data() {
-    const validateUsername = (rule, value, callback) => {
-      if (!isvalidUsername(value)) {
-        callback(new Error('请输入正确的用户名'))
-      } else {
-        callback()
-      }
-    }
-    const validatePass = (rule, value, callback) => {
-      if (value.length < 5) {
-        callback(new Error('密码不能小于5位'))
-      } else {
-        callback()
-      }
-    }
-    return {
-      loginForm: {
-        username: 'admin',
-        password: 'admin'
-      },
-      loginRules: {
-        username: [{ required: true, trigger: 'blur', validator: validateUsername }],
-        password: [{ required: true, trigger: 'blur', validator: validatePass }]
-      },
-      loading: false,
-      pwdType: 'password',
-      redirect: undefined
-    }
-  },
-  watch: {
-    $route: {
-      handler: function(route) {
-        this.redirect = route.query && route.query.redirect
-      },
-      immediate: true
-    }
-  },
-  methods: {
-    showPwd() {
-      if (this.pwdType === 'password') {
-        this.pwdType = ''
-      } else {
-        this.pwdType = 'password'
-      }
-    },
-    handleLogin() {
-      this.$refs.loginForm.validate(valid => {
-        if (valid) {
-          this.loading = true
-          this.$store.dispatch('Login', this.loginForm).then(() => {
-            this.loading = false
-            this.$router.push({ path: this.redirect || '/' })
-          }).catch(() => {
-            this.loading = false
-          })
-        } else {
-          console.log('error submit!!')
-          return false
+    name: 'Login',
+
+	data: function data() { 
+        /**
+         * 用户名校验的方法
+         */
+        const validateUsername = (rule, value, callback) => {
+            callback(); // 暂时无校验规则
         }
-      })
+
+        /**
+         * 密码校验的方法
+         */
+        const validatePass = (rule, value, callback) => {
+            if (value.length < 6) {
+                callback(new Error('密码不能小于6位'));
+
+            } else {
+                callback();
+
+            }
+        }
+
+        return {
+            loginForm: {
+                username: 'admin',
+                password: 'admin'
+            },
+
+            loginRules: {
+                username: [{ required: true, trigger: 'blur', validator: validateUsername }],
+                password: [{ required: true, trigger: 'blur', validator: validatePass }]
+            },
+
+            loading: false,
+            pwdType: 'password',
+            redirect: undefined, // 这个是重定向页面
+        }
+    },
+
+    watch: {
+        /**
+         * 监听路由改变
+         */
+        $route: {
+            handler: function handler(route) {
+                // 如果路由发生改变则赋值到重定向页面
+                this.redirect = route.query && route.query.redirect;
+            },
+
+            immediate: true,
+        }
+    },
+
+    methods: {
+        /**
+         * 显示密码的方法
+         */
+        showPwd: function showPwd() {
+            if (this.pwdType === 'password') {
+                this.pwdType = '';
+
+            } else {
+                this.pwdType = 'password';
+
+            }
+        },
+
+        /**
+         * 点击登录
+         */
+        handleLogin() {
+            this.$refs.loginForm.validate(valid => {
+                // 判断校验是否成功
+                if (valid) {
+                    this.loading = true; // 将按钮 设置为 登录中 防止重复提交
+
+                    this.$store.dispatch('Login', this.loginForm)
+                    .then(() => {
+                        // 将按钮 设置为 已经登录
+                        this.loading = false;
+                        // 页面页面跳转
+                        this.$router.push({ path: this.redirect || '/' });
+
+                    }).catch(() => this.loading = false);
+
+                } else {
+                    console.log('error submit!!');
+                    return false
+
+                }
+            });
+        }
     }
-  }
 }
 </script>
 
