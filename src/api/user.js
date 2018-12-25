@@ -19,7 +19,7 @@ export function login(username, password) {
  * 退出登录
  */
 export function logout() {
-    return request({
+    return apibasics({
         url: `${config.url.origin}/user/logout`,
         method: 'post'
     });

@@ -11,7 +11,7 @@ module.exports = {
                 "data": {
                     "token": Mock.Random.id(),
                     "username": Mock.Random.name(),
-                    "roles"： 1,
+                    "roles": 1,
                 },
                 "msg": "success"
             }

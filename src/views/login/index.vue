@@ -16,7 +16,7 @@
                 name="username" 
                 type="text" 
                 auto-complete="on" 
-                placeholder="username" 
+                placeholder="请输入手机号" 
             ></el-input>
         </el-form-item>
 
@@ -30,7 +30,7 @@
                 v-model="loginForm.password"
                 name="password"
                 auto-complete="on"
-                placeholder="password"
+                placeholder="请输入密码"
                 @keyup.enter.native="handleLogin" 
             ></el-input>
             <span class="show-pwd" @click="showPwd">
@@ -50,6 +50,7 @@
 </template>
 
 <script>
+import { login } from '@/api/user';
 
 export default {
     name: 'Login',
@@ -77,8 +78,8 @@ export default {
 
         return {
             loginForm: {
-                username: 'admin',
-                password: 'admin'
+                username: '',
+                password: ''
             },
 
             loginRules: {
@@ -124,19 +125,25 @@ export default {
          * 点击登录
          */
         handleLogin() {
+            const _this = this;
+
             this.$refs.loginForm.validate(valid => {
                 // 判断校验是否成功
                 if (valid) {
                     this.loading = true; // 将按钮 设置为 登录中 防止重复提交
 
-                    this.$store.dispatch('Login', this.loginForm)
-                    .then(() => {
+                    login(_this.loginForm.username, _this.loginForm.username)
+                    .then(res => {
                         // 将按钮 设置为 已经登录
                         this.loading = false;
-                        // 页面页面跳转
-                        this.$router.push({ path: this.redirect || '/' });
 
-                    }).catch(() => this.loading = false);
+                        // 页面页面跳转
+                        // this.$router.push({ path: this.redirect || '/' });
+
+                    }).catch(error => {
+                        console.log(error)
+                        this.loading = false
+                    });
 
                 } else {
                     console.log('error submit!!');

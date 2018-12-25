@@ -2,26 +2,62 @@
  * ajaxs请求复用的抽象
  */
 import axios from 'axios';
-import { Loading, Message } from 'element-ui';
-import Router from '@/router';
+import { Message } from 'element-ui';
+// import Router from '@/router';
 // Router.push({ path: '/' });
 
+/**
+ * 加载框（防止重复点击）
+ */
+let myLoading = {
+    /**
+     * 显示加载框
+     */
+    show: function show() {
+        let Loading = document.getElementById('el-loading-mask');
+        // 判断加载框是否不存在
+        if (!Loading) {
+            // 不存在的情况下才创建
+            Loading = document.createElement('div');
+            Loading.id = 'el-loading-mask';
+            Loading.classList.add("el-loading-mask");
+            Loading.classList.add("is-fullscreen");
+            Loading.setAttribute('style', 'z-index: 2000;');
+            Loading.innerHTML = '<div class="el-loading-spinner"><svg viewBox="25 25 50 50" class="circular"><circle cx="50" cy="50" r="20" fill="none" class="path"></circle></svg></div>';
+            document.body.classList.add('el-loading-parent--relative');
+            document.body.appendChild(Loading);
+        }
+    },
+
+    /**
+     * 关闭加载框
+     */
+    close: function close() {
+        let Loading = document.getElementById('el-loading-mask');
+        // 判断加载框是否存在
+        if (Loading) {
+            // 存在的情况下才进行删除
+            document.body.classList.remove('el-loading-parent--relative');
+            document.body.removeChild(Loading);
+        }
+    },
+}
+
 // 创建axios实例
-const service = axios.create();
+const apibasics = axios.create();
 
 /**
  * 设置 请求(request)拦截器
  */
-service.interceptors.request.use(
+apibasics.interceptors.request.use(
     /**
      * 拦截请求头
      */
     config => {
-        // 每个请求出去的时候, 显示加载框（防止重复点击）
-        Loading.service({ fullscreen: true });
+        myLoading.show(); // 每个请求出去的时候, 显示加载框（主要用来防止UI重复点击提交）
 
         // 让每个请求携带自定义token
-        config.headers['necrs-token'] = window.localStorage.necrstoken;
+        config.headers['necrs-token'] = window.localStorage.necrstoken ? window.localStorage.necrstoken : 'null';
 
         return config;
     },
@@ -30,7 +66,7 @@ service.interceptors.request.use(
      * 请求未发出去的情况
      */
     error => {
-        Loading.close(); // 关闭加载框
+        myLoading.close(); // 关闭加载框
         console.error(error); // for debug
         Message({
             message: `请求未发送, 原因: ${error}`,
@@ -44,14 +80,15 @@ service.interceptors.request.use(
 /**
  * 设置 响应(response)拦截器
  */
-service.interceptors.response.use(
+apibasics.interceptors.response.use(
     /**
      * 拦截响应
      */
     response => {
-        Loading.close(); // 关闭加载框
         const res = response.data;
-
+        
+        myLoading.close(); // 关闭加载框
+        
         /**
          * 判断拦截的是否有 1000 没有的情况表示失败
          */
@@ -66,7 +103,7 @@ service.interceptors.response.use(
             return Promise.reject('error');
 
         } else {
-            return response.data
+            return response.data;
 
         }
     },
@@ -75,7 +112,8 @@ service.interceptors.response.use(
      * 服务器返回错误的情况
      */
     error => {
-        Loading.close(); // 关闭加载框
+        myLoading.close(); // 关闭加载框
+        
         console.error(`服务器错误: ${error}`); // for debug
 
         Message({
@@ -88,4 +126,4 @@ service.interceptors.response.use(
     },
 )
 
-export default service
+export default apibasics

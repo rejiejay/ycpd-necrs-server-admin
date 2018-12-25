@@ -11,7 +11,7 @@ const app = {
          * 侧边栏
          */
         sidebar: {
-            opened: !+Cookies.get('sidebarStatus'),
+            opened: !+window.sessionStorage.sidebarStatus,
             withoutAnimation: false
         },
 
@@ -58,10 +58,10 @@ const app = {
              * 持久化 侧边栏 是否打开
              */
             if (state.sidebar.opened) {
-                Cookies.set('sidebarStatus', 1);
+                window.sessionStorage.setItem('sidebarStatus', 1);
 
             } else {
-                Cookies.set('sidebarStatus', 0);
+                window.sessionStorage.setItem('sidebarStatus', 0);
 
             }
 
@@ -73,7 +73,7 @@ const app = {
          * 关闭侧边栏 close siderbar 
          */
         CLOSE_SIDEBAR: (state, withoutAnimation) => {
-            Cookies.set('sidebarStatus', 1)
+            window.sessionStorage.setItem('sidebarStatus', 1);
             state.sidebar.opened = false
             state.sidebar.withoutAnimation = withoutAnimation
         },
