@@ -39,7 +39,7 @@ export const constantRouterMap = [
 
     // 当过滤失败的情况下, 直接跳转到 404 页面
     { path: '*', redirect: '/404', hidden: true },
-]
+];
 
 export default new Router({
     scrollBehavior: () => ({ y: 0 }), // 每次加载的时候, 页面跳转到顶部

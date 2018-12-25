@@ -3,6 +3,8 @@
  */
 import axios from 'axios';
 import { Loading, Message } from 'element-ui';
+import Router from '@/router';
+// Router.push({ path: '/' });
 
 // 创建axios实例
 const service = axios.create();

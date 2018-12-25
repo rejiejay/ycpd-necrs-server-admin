@@ -48,8 +48,8 @@ const user = {
                 .then(response => {
                     const data = response.data
                     
-                    // 验证返回的roles是否是一个非空数组
-                    if (data.roles && data.roles.length > 0) {
+                    // 验证返回的 roles 用户角色
+                    if (data.roles) {
                         commit('SET_ROLES', data.roles);
 
                     } else {
@@ -74,7 +74,7 @@ const user = {
                 logout(state.token)
                 .then(() => {
                     commit('SET_TOKEN', '');
-                    commit('SET_ROLES', []);
+                    commit('SET_ROLES', '');
                     removeToken();
                     resolve();
 
