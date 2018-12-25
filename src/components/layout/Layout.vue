@@ -15,8 +15,16 @@
 </template>
 
 <script>
-import { Navbar, Sidebar, AppMain } from './components'
-import ResizeMixin from './mixin/ResizeHandler'
+// 框架类
+import store from '@/store';
+// 组件类
+import Navbar from './Navbar';
+import Sidebar from './Sidebar';
+import AppMain from './AppMain';
+// 初始化
+const { body } = document;
+const WIDTH = 1024;
+const RATIO = 3;
 
 export default {
     name: 'Layout',
@@ -26,7 +34,25 @@ export default {
         AppMain
     },
 
-    mixins: [ResizeMixin],
+    watch: {
+        $route(route) {
+            if (this.device === 'mobile' && this.sidebar.opened) {
+                store.dispatch('CloseSideBar', { withoutAnimation: false })
+            }
+        }
+    },
+
+    beforeMount() {
+        window.addEventListener('resize', this.resizeHandler);
+    },
+
+    mounted() {
+        const isMobile = this.isMobile();
+        if (isMobile) {
+            store.dispatch('ToggleDevice', 'mobile');
+            store.dispatch('CloseSideBar', { withoutAnimation: true });
+        }
+    },
 
     computed: {
         sidebar() {
@@ -39,15 +65,37 @@ export default {
 
         classObj() {
             return {
-            hideSidebar: !this.sidebar.opened,
-            openSidebar: this.sidebar.opened,
-            withoutAnimation: this.sidebar.withoutAnimation,
-            mobile: this.device === 'mobile'
+                hideSidebar: !this.sidebar.opened,
+                openSidebar: this.sidebar.opened,
+                withoutAnimation: this.sidebar.withoutAnimation,
+                mobile: this.device === 'mobile'
             }
         }
     },
 
     methods: {
+        /**
+         * 判断是否手机端
+         */
+        isMobile() {
+            const rect = body.getBoundingClientRect();
+            return rect.width - RATIO < WIDTH;
+        },
+
+        /**
+         * 
+         */
+        resizeHandler() {
+            if (!document.hidden) {
+                const isMobile = this.isMobile();
+                store.dispatch('ToggleDevice', isMobile ? 'mobile' : 'desktop');
+
+                if (isMobile) {
+                    store.dispatch('CloseSideBar', { withoutAnimation: true });
+                }
+            }
+        },
+
         /**
          * 关闭侧边栏的方法
          */

@@ -37,11 +37,10 @@
 import path from 'path'
 import { isExternal } from '@/utils'
 import Item from './Item'
-import AppLink from './Link'
 
 export default {
   name: 'SidebarItem',
-  components: { Item, AppLink },
+  components: { Item },
   props: {
     // route object
     item: {

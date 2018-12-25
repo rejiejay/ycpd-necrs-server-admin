@@ -25,15 +25,18 @@ export const constantRouterMap = [
     { path: '/login', component: () => import('@/views/login/index'), hidden: true },
     { path: '/404', component: () => import('@/views/404'), hidden: true },
 
+    /**
+     * 订单页面
+     */
     {
         path: '/',
         component: Layout,
-        redirect: '/dashboard',
-        name: 'Dashboard',
+        redirect: '/order',
+        name: 'order',
         hidden: true,
         children: [{
-            path: 'dashboard',
-            component: () => import('@/views/dashboard/index')
+            path: 'order',
+            component: () => import('@/views/order/index')
         }]
     },
 
