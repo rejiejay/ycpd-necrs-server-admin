@@ -9,7 +9,7 @@ import 'nprogress/nprogress.css'; // Progress 进度条样式
  * 不重定向白名单
  * 意思是说这个页面不会重定向
  */
-const whiteList = ['/login'];
+const whiteList = [ '/login' ];
 
 /**
  * 路由守卫

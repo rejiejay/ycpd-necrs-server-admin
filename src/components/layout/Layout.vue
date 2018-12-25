@@ -8,7 +8,10 @@
     <sidebar class="sidebar-container"></sidebar>
 
     <div class="main-container">
+        <!-- 顶部栏 -->
         <navbar></navbar>
+
+        <!-- 内容区域 -->
         <app-main></app-main>
     </div>
 </div>
