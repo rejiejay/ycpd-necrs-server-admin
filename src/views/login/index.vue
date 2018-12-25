@@ -137,8 +137,12 @@ export default {
                         // 将按钮 设置为 已经登录
                         this.loading = false;
 
+                        window.sessionStorage.setItem('necrstoken', res.data.token);
+                        window.localStorage.setItem('necrsusername', res.data.username);
+                        window.sessionStorage.setItem('necrsroles', res.data.roles);
+
                         // 页面页面跳转
-                        // this.$router.push({ path: this.redirect || '/' });
+                        this.$router.push({ path: this.redirect || '/' });
 
                     }).catch(error => {
                         console.log(error)

@@ -1,11 +1,9 @@
 // 框架类
-import { Message } from 'element-ui';
-import NProgress from 'nprogress' // Progress 进度条
+import NProgress from 'nprogress'; // Progress 进度条
 // 组件类
-import router from './router'
-import store from './store'
+import router from './router';
 // 样式类
-import 'nprogress/nprogress.css'// Progress 进度条样式
+import 'nprogress/nprogress.css'; // Progress 进度条样式
 
 /**
  * 不重定向白名单
@@ -22,7 +20,7 @@ router.beforeEach((to, from, next) => {
     /**
      * 判断是否获取到 token
      */
-    if (window.localStorage.necrstoken) {
+    if (window.sessionStorage.necrstoken) {
         
         /**
          * 获取到 token 的情况下, 访问的路径是 login 的情况下, 重定向到 首页
