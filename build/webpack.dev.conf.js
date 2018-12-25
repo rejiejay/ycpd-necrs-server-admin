@@ -42,6 +42,10 @@ const devWebpackConfig = merge(baseWebpackConfig, {
     publicPath: config.dev.assetsPublicPath,
     proxy: config.dev.proxyTable,
     quiet: true, // necessary for FriendlyErrorsPlugin
+    /**
+     * 引入 mock/index.js
+     */
+    before: require('../mock/index.js'), 
     watchOptions: {
       poll: config.dev.poll
     }
