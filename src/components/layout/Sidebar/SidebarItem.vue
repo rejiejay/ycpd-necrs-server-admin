@@ -38,14 +38,15 @@
 </template>
 
 <script>
-import path from 'path'
-import { isExternal } from '@/utils'
-import Item from './Item'
+import path from 'path';
+import { isExternal } from '@/utils';
+import Item from './Item';
+import AppLink from './Link';
 
 export default {
     name: 'SidebarItem',
 
-    components: { Item },
+    components: { Item, AppLink },
 
     props: {
         // route object

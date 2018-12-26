@@ -5,6 +5,7 @@
     <!-- 侧边栏的遮罩, 手机端的时候会用到 -->
     <div v-if="device === 'mobile' && sidebar.opened" class="drawer-bg" @click="handleClickOutside"></div>
     
+    <!-- 侧边栏 -->
     <sidebar class="sidebar-container"></sidebar>
 
     <div class="main-container">

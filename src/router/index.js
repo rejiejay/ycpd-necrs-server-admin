@@ -33,11 +33,12 @@ export const constantRouterMap = [
         component: Layout,
         redirect: '/order',
         name: 'order',
-        hidden: true,
+        hidden: false,
         children: [{
             path: 'order',
-            component: () => import('@/views/order/index')
-        }]
+            component: () => import('@/views/order/index'),
+            meta: { title: '订单', icon: 'example', noCache: true, /** noCache 如果设置为true，则不会被 <keep-alive> 缓存(默认 false) */ }
+        }],
     },
 
     // 当过滤失败的情况下, 直接跳转到 404 页面
