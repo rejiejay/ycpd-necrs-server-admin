@@ -50,11 +50,11 @@ export const constantRouterMap = [
         redirect: '/shops',
         name: 'shops',
         hidden: false,
-        meta: { title: '商家管理', icon: 'shops' },
+        meta: { title: '单位管理', icon: 'shops' },
         children: [{
             path: '/',
             component: () => import('@/views/shops/index'),
-            meta: { title: '商家管理', icon: 'shops', noCache: true, hidden: true, }
+            meta: { title: '单位管理', icon: 'shops', noCache: true, hidden: true, }
         }],
     },
     {
@@ -62,7 +62,7 @@ export const constantRouterMap = [
         component: Layout,
         name: 'shops-details',
         hidden: true,
-        meta: { title: '商家管理', icon: 'shops' },
+        meta: { title: '单位管理', icon: 'shops' },
         children: [{
             path: '/',
             component: () => import('@/views/shops/details'),

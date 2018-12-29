@@ -4,7 +4,7 @@
     <!-- 顶部操作按钮 -->
     <div class="shops-operate flex-start-center">
         <div class="shops-operate-left flex-rest">
-            <el-button type="danger" icon="el-icon-plus">添加</el-button>
+            <el-button type="danger" icon="el-icon-plus" @click="jumpToRouter('/shops/details')">添加</el-button>
         </div>
 
         <div class="shops-operate-right  flex-start">
@@ -106,7 +106,7 @@ export default {
             // 列表数据
             shopslist: [
                 {
-                    id: '', // 数据唯一标识
+                    id: '1', // 数据唯一标识
                     name: 'xxxxxx新能源专业维修',
                     type: '维修单位',
                     brand: '北汽',
@@ -131,7 +131,7 @@ export default {
          * 编辑一个项
          */
         editHandle: function editHandle(item) {
-            console.log(item);
+            this.jumpToRouter('/shops/details', {id: item.id});
         },
 
         /**
