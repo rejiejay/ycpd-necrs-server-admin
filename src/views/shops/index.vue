@@ -1,3 +1,4 @@
+<!-- 单位管理列表 -->
 <template>
 <div class="shops-container">
     <!-- 顶部操作按钮 -->
@@ -123,7 +124,7 @@ export default {
         } 
     },
 
-	mounted: function mounted() { },
+	mounted: function mounted() {},
 
 	methods: {
         /**
