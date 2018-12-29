@@ -25,19 +25,35 @@ export const constantRouterMap = [
     { path: '/login', component: () => import('@/views/login/index'), hidden: true },
     { path: '/404', component: () => import('@/views/404'), hidden: true },
 
+    // /**
+    //  * 订单管理
+    //  */
+    // {
+    //     path: '/',
+    //     component: Layout,
+    //     redirect: '/order',
+    //     name: 'order',
+    //     hidden: false,
+    //     children: [{
+    //         path: 'order',
+    //         component: () => import('@/views/order/index'),
+    //         meta: { title: '订单管理', icon: 'order', noCache: true, /** noCache 如果设置为true，则不会被 <keep-alive> 缓存(默认 false) */ }
+    //     }],
+    // },
+
     /**
-     * 订单页面
+     * 商家管理
      */
     {
         path: '/',
         component: Layout,
-        redirect: '/order',
-        name: 'order',
+        redirect: '/shops',
+        name: 'shops',
         hidden: false,
         children: [{
-            path: 'order',
-            component: () => import('@/views/order/index'),
-            meta: { title: '订单', icon: 'example', noCache: true, /** noCache 如果设置为true，则不会被 <keep-alive> 缓存(默认 false) */ }
+            path: 'shops',
+            component: () => import('@/views/shops/index'),
+            meta: { title: '商家管理', icon: 'shops', noCache: true, }
         }],
     },
 

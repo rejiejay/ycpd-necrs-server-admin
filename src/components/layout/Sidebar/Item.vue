@@ -1,4 +1,6 @@
+<!-- 这种写法类似于 react 写法 -->
 <script>
+
 export default {
     name: 'MenuItem',
 
@@ -31,4 +33,5 @@ export default {
         return vnodes
     }
 }
+
 </script>

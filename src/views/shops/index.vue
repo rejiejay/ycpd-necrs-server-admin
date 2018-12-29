@@ -1,7 +1,10 @@
 <template>
-<div class="order-container">
-    <div class="dashboard-text">name:{{ name }}</div>
-    <div class="dashboard-text">roles</div>
+<div class="shops-container">
+    <!-- 顶部操作按钮 -->
+    <div class="shops-top flex-start-center">
+
+    </div>
+
 </div>
 </template>
 
@@ -9,14 +12,7 @@
 import { mapGetters } from 'vuex';
 
 export default {
-    name: 'order',
-
-    computed: {
-        ...mapGetters([
-            'name',
-            'roles'
-        ]),
-    },
+    name: 'shops',
 
 	data: function data() { 
         return {
@@ -26,9 +22,15 @@ export default {
 	mounted: function mounted() { },
 
 	methods: { },
+
 }
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
+$black1: #303133;
+$black2: #606266;
+$black3: #909399;
+$black4: #C0C4CC;
+
 
 </style>

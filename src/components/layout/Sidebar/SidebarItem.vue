@@ -2,7 +2,12 @@
 <template>
 <div v-if="!item.hidden && item.children" class="menu-wrapper"><!-- 侧边栏存在 children 的时候 并且 不是隐藏的时候才显示 -->
 
-    <template v-if="hasOneShowingChild(item.children,item) && (!onlyOneChild.children || onlyOneChild.noShowingChildren) && !item.alwaysShow">
+    <!-- 只有一个子列表的情况 -->
+    <template v-if="
+        hasOneShowingChild(item.children, item) && 
+        (!onlyOneChild.children || onlyOneChild.noShowingChildren) && 
+        !item.alwaysShow"
+    >
         <app-link :to="resolvePath(onlyOneChild.path)">
 
             <el-menu-item :index="resolvePath(onlyOneChild.path)" :class="{'submenu-title-noDropdown':!isNest}">
@@ -12,6 +17,7 @@
         </app-link>
     </template>
 
+    <!-- 有多个列表的情况 -->
     <el-submenu v-else :index="resolvePath(item.path)">
         <template slot="title">
             <item v-if="item.meta" :icon="item.meta.icon" :title="item.meta.title" />
@@ -39,7 +45,6 @@
 
 <script>
 import path from 'path';
-import { isExternal } from '@/utils';
 import Item from './Item';
 import AppLink from './Link';
 
@@ -71,6 +76,9 @@ export default {
     },
 
     methods: {
+        /**
+         * 只有一个子列表的时候
+         */
         hasOneShowingChild(children, parent) {
             const showingChildren = children.filter(item => {
                 if (item.hidden) {
@@ -96,17 +104,22 @@ export default {
             return false
         },
 
+        /**
+         * 处理路径
+         */
         resolvePath(routePath) {
-            if (this.isExternalLink(routePath)) {
+            function isExternal(path) {
+                return /^(https?:|mailto:|tel:)/.test(path)
+            }
+
+            let isExternalLink = routePath => isExternal(routePath);
+
+            if (isExternalLink(routePath)) {
                 return routePath
             }
 
             return path.resolve(this.basePath, routePath)
         },
-
-        isExternalLink(routePath) {
-            return isExternal(routePath);
-        }
     }
 }
 </script>

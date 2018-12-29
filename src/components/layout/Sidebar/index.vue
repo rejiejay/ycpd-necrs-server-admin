@@ -1,5 +1,6 @@
 <!-- 侧边栏 -->
 <template>
+    <!-- 饿了么框架的一层包裹 -->
     <el-scrollbar wrap-class="scrollbar-wrapper">
         <el-menu
             :show-timeout="200"
@@ -10,6 +11,7 @@
             text-color="#bfcbd9"
             active-text-color="#409EFF"
         >
+            <!-- 这个才是比较核心的 -->
             <sidebar-item 
                 v-for="route in routes" 
                 :key="route.path" 
