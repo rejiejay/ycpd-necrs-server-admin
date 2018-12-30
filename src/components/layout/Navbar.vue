@@ -100,9 +100,9 @@ export default {
          * 登出的方法
          */
         logout() {
-            this.$store.dispatch('LogOut').then(() => {
-                location.reload(); // 为了重新实例化vue-router对象 避免bug
-            })
+            window.sessionStorage.removeItem('necrstoken');
+            this.$router.push('/login');
+            location.reload(); // 为了重新实例化vue-router对象 避免bug
         },
         
         /**
@@ -117,10 +117,10 @@ export default {
             });
 
             const first = matched[0];
-            if (first && first.name !== 'dashboard') {
+            if (first && first.name !== '') {
                 matched = [
                     { 
-                        path: '/dashboard', 
+                        path: '/', 
                         meta: { title: '新能源洗车维修管理平台' }
                     },
                 ].concat(matched);
@@ -133,6 +133,7 @@ export default {
          * 处理面包屑点击跳转
          */
         handleLink(item) {
+            const _this = this;
             const { redirect, path } = item;
 
             if (redirect) {
@@ -145,7 +146,7 @@ export default {
              */
             function pathCompile(path) {
                 // To solve this problem https://github.com/PanJiaChen/vue-element-admin/issues/561
-                const { params } = this.$route;
+                const params = _this.$route.params;
                 var toPath = pathToRegexp.compile(path);
 
                 return toPath(params);
