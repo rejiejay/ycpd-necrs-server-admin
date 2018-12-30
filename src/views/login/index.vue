@@ -134,19 +134,35 @@ export default {
 
                     login(_this.loginForm.username, _this.loginForm.username)
                     .then(res => {
-                        // 将按钮 设置为 已经登录
-                        this.loading = false;
+                        _this.loading = false; // 将按钮 设置为 已经登录
 
                         window.sessionStorage.setItem('necrstoken', res.data.token);
                         window.localStorage.setItem('necrsusername', res.data.username);
-                        window.sessionStorage.setItem('necrsroles', res.data.roles);
 
-                        // 页面页面跳转
-                        this.$router.push({ path: this.redirect || '/' });
+                        // 初始化登录用户的权限
+                        if (res.data.roles === 1) { // 表示 平台用户
+                            window.sessionStorage.setItem('necrsroles', 'platformer');
+
+                        } else if (res.data.roles === 2) { // 表示 修理厂用户 (维修单位)
+                            window.sessionStorage.setItem('necrsroles', 'repaier');
+
+                        } else if (res.data.roles === 3) { // 表示 品牌厂家
+                            window.sessionStorage.setItem('necrsroles', 'brander');
+
+                        } else if (res.data.roles === 4) { // 表示 租赁公司 (客户归属公司)
+                            window.sessionStorage.setItem('necrsroles', 'renter');
+
+                        } else {
+                            return alert('此用户无任何权限.');
+                        }
+
+
+                        // 页面页面跳转， 如果存在 重定向页面优先跳转到重定向页面
+                        _this.$router.push({ path: _this.redirect || '/' });
 
                     }).catch(error => {
                         console.log(error)
-                        this.loading = false
+                        _this.loading = false; // 将按钮 设置为 已经登录
                     });
 
                 } else {

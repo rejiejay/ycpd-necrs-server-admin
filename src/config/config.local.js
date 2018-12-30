@@ -2,6 +2,6 @@
 module.exports = {
     url: {
         // 请求源
-        origin: 'http://scas.api2.hotgz.com',
+        origin: 'http://server.api2.hotgz.com',
     },
 };

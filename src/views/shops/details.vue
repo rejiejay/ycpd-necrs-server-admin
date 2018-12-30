@@ -166,6 +166,7 @@ export default {
          */
         initBrandList: function initBrandList() {
         },
+        
         /**
          * 根据id初始化页面信息
          */

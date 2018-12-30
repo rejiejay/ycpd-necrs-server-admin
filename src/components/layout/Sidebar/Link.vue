@@ -1,3 +1,4 @@
+<!-- 这个组件就是用来跳转的, 但是通过 v-bind 多封装了个 过滤器, 目的是 过滤到 https?:|mailto:|tel 这几个属性的时候将 routwe-link 过滤为 <a></a> 链接 -->
 <template>
     <!-- eslint-disable vue/require-component-is-->
     <component v-bind="linkProps(to)">
@@ -6,22 +7,18 @@
 </template>
 
 <script>
-import { isExternal } from '@/utils'
+
 export default {
     props: {
         to: {
             type: String,
             required: true
-        }
+        },
     },
 
     methods: {
-        isExternalLink(routePath) {
-            return isExternal(routePath)
-        },
-        
         linkProps(url) {
-            if (this.isExternalLink(url)) {
+            if (/^(https?:|mailto:|tel:)/.test(url)) {
                 return {
                     is: 'a',
                     href: url,

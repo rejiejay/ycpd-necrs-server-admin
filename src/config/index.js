@@ -15,17 +15,18 @@ let main = () => {
         // mock环境
         plugin = mock;
 
-    } else if (window.location.host === 'scas.api2.hotgz.com') {
+    } else if (window.location.host === 'server.api2.hotgz.com') {
         // 测试环境
         plugin = dev;
 
     } else {
         plugin = prod;
+
     }
 
     /**
      * 混合 公共配置
-     * 注意 公共配置 会覆盖掉 本身的配置 因为 
+     * 注意 公共配置 会覆盖掉 本身的配置 因为 代码执行是靠后的
      */
     for (let key in plugin) {
         config[key] = plugin[key];

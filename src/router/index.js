@@ -25,31 +25,32 @@ export const constantRouterMap = [
     { path: '/login', component: () => import('@/views/login/index'), hidden: true },
     { path: '/404', component: () => import('@/views/404'), hidden: true },
 
-    // /**
-    //  * 订单管理
-    //  */
-    // {
-    //     path: '/',
-    //     component: Layout,
-    //     redirect: '/order',
-    //     name: 'order',
-    //     hidden: false,
-    //     children: [{
-    //         path: 'order',
-    //         component: () => import('@/views/order/index'),
-    //         meta: { title: '订单管理', icon: 'order', noCache: true, /** noCache 如果设置为true，则不会被 <keep-alive> 缓存(默认 false) */ }
-    //     }],
-    // },
+    /**
+     * 订单管理
+     */
+    {
+        path: '/order',
+        component: Layout,
+        alias: [ '/' ],
+        name: 'order',
+        hidden: false,
+        meta: { title: '订单管理', icon: 'order' },
+        children: [{
+            path: '/',
+            component: () => import('@/views/order/index'),
+            meta: { title: '订单管理', icon: 'order', noCache: true, /** noCache 如果设置为true，则不会被 <keep-alive> 缓存(默认 false) */ }
+        }],
+    },
 
     /**
      * 商家管理
      */
     {
-        path: '/',
+        path: '/shops',
         component: Layout,
-        redirect: '/shops',
         name: 'shops',
         hidden: false,
+        // roles: [ 'repaier' ], // 只有 修理厂用户 (维修单位) 才可以访问
         meta: { title: '单位管理', icon: 'shops' },
         children: [{
             path: '/',
@@ -62,6 +63,7 @@ export const constantRouterMap = [
         component: Layout,
         name: 'shops-details',
         hidden: true,
+        // roles: [ 'repaier' ], // 只有 修理厂用户 (维修单位) 才可以访问
         meta: { title: '单位管理', icon: 'shops' },
         children: [{
             path: '/',

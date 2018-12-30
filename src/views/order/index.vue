@@ -1,7 +1,5 @@
 <template>
 <div class="order-container">
-    <div class="dashboard-text">name:{{ name }}</div>
-    <div class="dashboard-text">roles</div>
 </div>
 </template>
 
@@ -11,16 +9,8 @@ import { mapGetters } from 'vuex';
 export default {
     name: 'order',
 
-    computed: {
-        ...mapGetters([
-            'name',
-            'roles'
-        ]),
-    },
-
 	data: function data() { 
-        return {
-        } 
+        return { } 
     },
 
 	mounted: function mounted() { },
