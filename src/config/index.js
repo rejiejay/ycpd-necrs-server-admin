@@ -10,10 +10,10 @@ let main = () => {
 
     if (window.location.hostname === 'localhost') {
         // 本地环境
-        // plugin = local;
+        plugin = local;
 
         // mock环境
-        plugin = mock;
+        // plugin = mock;
 
     } else if (window.location.host === 'server.api2.hotgz.com') {
         // 测试环境

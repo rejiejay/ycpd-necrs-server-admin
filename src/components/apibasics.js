@@ -3,8 +3,7 @@
  */
 import axios from 'axios';
 import { Message } from 'element-ui';
-// import Router from '@/router';
-// Router.push({ path: '/' });
+import Router from '@/router';
 
 /**
  * 加载框（防止重复点击）
@@ -88,12 +87,31 @@ apibasics.interceptors.response.use(
         const res = response.data;
         
         myLoading.close(); // 关闭加载框
+
+        // 网络错误的情况
+        if (response.status === 0 && response.statusText === 'error') {
+            return Promise.reject('网络错误, 请检查你的网络');
+        }
+
+        // 登录过期的情况
+        if (response.status === 444) {
+            Router.push({ path: '/login' });
+            return Promise.reject('登录过期, 请重新登录');
+        }
+    
+        // 服务器正在升级或异常
+        if (response.status === 502) {
+            // 跳转等正在升级页面
+            Router.push({ path: '/404' });
+            return Promise.reject('服务器正在升级或异常,请稍后再试!');
+        } 
         
         /**
          * 判断拦截的是否有 1000 没有的情况表示失败
          */
         if (res.code !== 1000) {
-            // 不是 1000 的情况下 直接报出错误
+            // 不是 1000 的情况下, 直接报出错误
+
             Message({
                 message: res.message,
                 type: 'error',
@@ -111,7 +129,7 @@ apibasics.interceptors.response.use(
     /**
      * 服务器返回错误的情况
      */
-    error => {
+    (error, da, addd) => {
         myLoading.close(); // 关闭加载框
         
         console.error(`服务器错误: ${error}`); // for debug

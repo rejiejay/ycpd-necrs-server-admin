@@ -1,26 +1,15 @@
+/**
+ * 因为登录前的操作 与封装的 apibasics 操作不一致, 所以登录前的请求是写在页面上的
+ */
 import apibasics from '@/components/apibasics';
 import config from '@/config';
-
-/**
- * 通过用户名和密码登录
- */
-export function login(username, password) {
-    return apibasics({
-        url: `${config.url.origin}/user/login`,
-        method: 'post',
-        data: {
-            username,
-            password
-        }
-    });
-}
 
 /**
  * 退出登录
  */
 export function logout() {
     return apibasics({
-        url: `${config.url.origin}/user/logout`,
-        method: 'post'
+        url: `${config.url.origin}/necrs/server/logout`,
+        method: 'get'
     });
 }

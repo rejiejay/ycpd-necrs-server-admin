@@ -54,8 +54,12 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
-import pathToRegexp from 'path-to-regexp'
+// 框架类
+import pathToRegexp from 'path-to-regexp';
+// 组件类
+import { mapGetters } from 'vuex';
+// 请求类
+import { logout } from '@/api/user';
 
 export default {
     data() {
@@ -100,9 +104,13 @@ export default {
          * 登出的方法
          */
         logout() {
-            window.sessionStorage.removeItem('necrstoken');
-            this.$router.push('/login');
-            location.reload(); // 为了重新实例化vue-router对象 避免bug
+            logout()
+            .then(res => {
+                window.sessionStorage.removeItem('necrstoken');
+                this.$router.push('/login');
+                location.reload(); // 为了重新实例化vue-router对象 避免bug
+
+            }).catch(error => console.error(error)); // 一般都不会报错
         },
         
         /**
