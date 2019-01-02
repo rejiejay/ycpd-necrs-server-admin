@@ -2,6 +2,6 @@
 module.exports = {
     url: {
         // 请求源
-        origin: 'http://server.api2.hotgz.com',
+        origin: 'http://necrsserver.api2.hotgz.com/v1',
     },
 };

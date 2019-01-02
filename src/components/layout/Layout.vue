@@ -1,5 +1,4 @@
 <!-- 侧边栏 以及 顶部 -->
-
 <template>
 <div :class="classObj" class="app-wrapper">
     <!-- 侧边栏的遮罩, 手机端的时候会用到 -->

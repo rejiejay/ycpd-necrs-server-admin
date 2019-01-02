@@ -15,7 +15,7 @@ let main = () => {
         // mock环境
         // plugin = mock;
 
-    } else if (window.location.host === 'server.api2.hotgz.com') {
+    } else if (window.location.host === 'necrsserver.api2.hotgz.com') {
         // 测试环境
         plugin = dev;
 

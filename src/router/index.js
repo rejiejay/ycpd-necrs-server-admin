@@ -34,6 +34,7 @@ export const constantRouterMap = [
         alias: [ '/' ],
         name: 'order',
         hidden: false,
+        // roles: [ 'repaier' ], // 只有 修理厂用户 (维修单位) 才可以访问
         meta: { title: '订单管理', icon: 'order' },
         children: [{
             path: '/',

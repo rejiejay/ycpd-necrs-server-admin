@@ -14,7 +14,7 @@ module.exports = {
      */
     proxyTable: {
       '/api': {
-        target: 'http://server.api2.hotgz.com/',
+        target: 'http://necrsserver.api2.hotgz.com/v1/',
         pathRewrite: {'^/api' : ''},
         changeOrigin: true,
         secure: false
